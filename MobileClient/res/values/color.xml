@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- <color name="red">#FF0000</color> -->
+    <color name="transparent">#9000</color>
+    <drawable name="red">#ff0000</drawable>
+    <color name="gray">#999999</color>
+    <color name="blue">#0000ff</color>
+    <color name="background">#ffffff</color>
+    <color name="search">#333</color>
+</resources>

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobileclient.activity"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+         android:targetSdkVersion="8"
+         /> 
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" 
+        android:name="com.mobileclient.app.Declare">
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name="MainMenuActivity"></activity>
+        <activity android:name="CollegeInfoListActivity"></activity>
+        <activity android:name="CollegeInfoQueryActivity"></activity>
+        <activity android:name="CollegeInfoAddActivity"></activity>
+        <activity android:name="CollegeInfoEditActivity"></activity>
+        <activity android:name="CollegeInfoDetailActivity"></activity>
+        <activity android:name="SpecialFieldInfoListActivity"></activity>
+        <activity android:name="SpecialFieldInfoQueryActivity"></activity>
+        <activity android:name="SpecialFieldInfoAddActivity"></activity>
+        <activity android:name="SpecialFieldInfoEditActivity"></activity>
+        <activity android:name="SpecialFieldInfoDetailActivity"></activity>
+        <activity android:name="ClassInfoListActivity"></activity>
+        <activity android:name="ClassInfoQueryActivity"></activity>
+        <activity android:name="ClassInfoAddActivity"></activity>
+        <activity android:name="ClassInfoEditActivity"></activity>
+        <activity android:name="ClassInfoDetailActivity"></activity>
+        <activity android:name="Student_QQ287307421ListActivity"></activity>
+        <activity android:name="Student_QQ287307421QueryActivity"></activity>
+        <activity android:name="Student_QQ287307421AddActivity"></activity>
+        <activity android:name="Student_QQ287307421EditActivity"></activity>
+        <activity android:name="Student_QQ287307421DetailActivity"></activity>
+        <activity android:name="Teacher_QQ287307421ListActivity"></activity>
+        <activity android:name="Teacher_QQ287307421QueryActivity"></activity>
+        <activity android:name="Teacher_QQ287307421AddActivity"></activity>
+        <activity android:name="Teacher_QQ287307421EditActivity"></activity>
+        <activity android:name="Teacher_QQ287307421DetailActivity"></activity>
+        <activity android:name="CourseInfo_QQ254540457ListActivity"></activity>
+        <activity android:name="CourseInfo_QQ254540457QueryActivity"></activity>
+        <activity android:name="CourseInfo_QQ254540457AddActivity"></activity>
+        <activity android:name="CourseInfo_QQ254540457EditActivity"></activity>
+        <activity android:name="CourseInfo_QQ254540457DetailActivity"></activity>
+        <activity android:name="StudentSelectCourseInfoListActivity"></activity>
+        <activity android:name="StudentSelectCourseInfoQueryActivity"></activity>
+        <activity android:name="StudentSelectCourseInfoAddActivity"></activity>
+        <activity android:name="StudentSelectCourseInfoEditActivity"></activity>
+        <activity android:name="StudentSelectCourseInfoDetailActivity"></activity>
+        <activity android:name="ScoreInfoListActivity"></activity>
+        <activity android:name="ScoreInfoQueryActivity"></activity>
+        <activity android:name="ScoreInfoAddActivity"></activity>
+        <activity android:name="ScoreInfoEditActivity"></activity>
+        <activity android:name="ScoreInfoDetailActivity"></activity>
+        <activity android:name="NewsListActivity"></activity>
+        <activity android:name="NewsQueryActivity"></activity>
+        <activity android:name="NewsAddActivity"></activity>
+        <activity android:name="NewsEditActivity"></activity>
+        <activity android:name="NewsDetailActivity"></activity>
+
+        <activity android:name="photoListActivity"></activity>
+    </application>
+
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+
+	<!-- 文件读写权限 -->
+	
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"></uses-permission>
+	
+	
+</manifest>

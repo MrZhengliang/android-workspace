@@ -1529,7 +1529,8 @@ containing a value of this type.
         public static final int com_facebook_search_bar_layout=0x7f030025;
         public static final int com_facebook_tooltip_bubble=0x7f030026;
         public static final int com_facebook_usersettingsfragment=0x7f030027;
-        public static final int support_simple_spinner_dropdown_item=0x7f030028;
+        public static final int fragment_main=0x7f030028;
+        public static final int support_simple_spinner_dropdown_item=0x7f030029;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;

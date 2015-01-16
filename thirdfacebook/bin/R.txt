@@ -488,7 +488,8 @@ int layout com_facebook_placepickerfragment_list_row 0x7f030024
 int layout com_facebook_search_bar_layout 0x7f030025
 int layout com_facebook_tooltip_bubble 0x7f030026
 int layout com_facebook_usersettingsfragment 0x7f030027
-int layout support_simple_spinner_dropdown_item 0x7f030028
+int layout fragment_main 0x7f030028
+int layout support_simple_spinner_dropdown_item 0x7f030029
 int menu main 0x7f0c0000
 int string abc_action_bar_home_description 0x7f08001e
 int string abc_action_bar_up_description 0x7f08001f

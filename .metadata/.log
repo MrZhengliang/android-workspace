@@ -210,3 +210,46 @@ org.eclipse.core.internal.resources.ResourceException: Resource '/thirdfacebook/
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
 !SUBENTRY 1 org.eclipse.core.resources 4 368 2015-01-16 18:16:26.320
 !MESSAGE Resource '/thirdfacebook/res' does not exist.
+!SESSION 2015-01-17 20:48:06.211 -----------------------------------------------
+eclipse.buildId=M20120914-1800
+java.version=1.6.0_45
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.mobile.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.mobile.product
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:16.898
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project ESManageClient
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.031
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project FacebookSDK
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.032
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project FriendPickerSample
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.033
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project HelloFacebookSample
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.033
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project MobileClient
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.034
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project PlacePickerSample
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.035
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project RPSSample
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.036
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project Scrumptious
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.037
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project SwitchUserSample
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.037
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project appcompat_v7
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.038
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project appcompat_v7_2
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2015-01-17 20:49:17.039
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project thirdfacebook

@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener"/>
+<fullyQualifiedTypeName name="android.content.IntentSender.SendIntentException"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;MobileClient/res/layout/my_great.xml&apos; to &apos;google_plus.xml&apos;" description="Rename resource &apos;my_great.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="res/layout/my_great.xml" name="google_plus.xml" stamp="1421653708326" updateReferences="true"/>
+</session>

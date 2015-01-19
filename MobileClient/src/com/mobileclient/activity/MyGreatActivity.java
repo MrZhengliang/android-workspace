@@ -24,7 +24,7 @@ public class MyGreatActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_great);
+        setContentView(R.layout.google_plus);
 
         facebook.authorize(this, new DialogListener() {
             @Override

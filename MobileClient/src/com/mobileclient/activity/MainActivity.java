@@ -20,13 +20,11 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
@@ -39,9 +37,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.AppEventsLogger;
-import com.facebook.FacebookAuthorizationException;
-import com.facebook.FacebookOperationCanceledException;
+
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -65,6 +61,11 @@ public class MainActivity extends ActionBarActivity {
 	 * facebook登陆按钮
 	 */
 	private LoginButton fbLoginBtn = null;
+	
+	/**
+	 * google+
+	 */
+	private Button googlePlusButton = null;
 	/**
 	 * 用户名
 	 */
@@ -101,6 +102,8 @@ public class MainActivity extends ActionBarActivity {
 		fbLoginBtn = (LoginButton) findViewById(R.id.fb_button);
 		userName = (EditText) findViewById(R.id.username_edit);
 		password = (EditText) findViewById(R.id.password_edit);
+		
+		googlePlusButton= (Button) findViewById(R.id.google_plus_button);
 
 		// 登陆实现
 		loginBtn.setOnClickListener(new OnClickListener() {
@@ -204,6 +207,17 @@ public class MainActivity extends ActionBarActivity {
 							Toast.LENGTH_SHORT).show();
 				}
 
+			}
+		});
+		
+		googlePlusButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Log.i("GooglePlusActivity","准备跳转GooglePlusActivity...");
+				Intent intent = new Intent(MainActivity.this,
+						GooglePlusActivity.class);
+				startActivity(intent);
+				finish();// 关闭自己
 			}
 		});
 

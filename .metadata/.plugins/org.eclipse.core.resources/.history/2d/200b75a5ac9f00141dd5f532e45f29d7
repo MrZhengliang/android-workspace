@@ -1,0 +1,68 @@
+/**
+ * 
+ */
+package com.mobileclient.activity;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.view.View;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.plus.PlusClient;
+
+/**
+ * @author zl
+ * 
+ */
+public class GooglePlusActivity extends Activity implements
+		View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
+	
+	private static final String TAG = "GooglePlusActivity";
+    private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
+
+    private ProgressDialog mConnectionProgressDialog;
+    
+    private PlusClient mPlusClient;
+    
+    private ConnectionResult mConnectionResult;
+	
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        mPlusClient = new PlusClient.Builder(this, this, this)
+//        		.setVisibleActivities("http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity")
+//                .build();
+        // 在未解决连接故障时，显示进度条。
+        mConnectionProgressDialog = new ProgressDialog(this);
+        mConnectionProgressDialog.setMessage("Signing in...");
+    }
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,26 @@
+/**
+ * 
+ */
+package com.mobileclient.activity;
+
+import android.app.Activity;
+
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+
+/**
+ * @author zl
+ *
+ */
+public class GooglePlusActivity extends Activity implements View.OnClickListener,
+ConnectionCallbacks, OnConnectionFailedListener{
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

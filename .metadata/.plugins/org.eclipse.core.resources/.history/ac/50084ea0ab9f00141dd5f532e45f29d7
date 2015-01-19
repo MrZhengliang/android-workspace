@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package com.mobileclient.activity;
+
+import com.google.android.gms.common.GooglePlayServicesClient.*;
+
+import android.app.Activity;
+
+/**
+ * @author zl
+ *
+ */
+public class GooglePlusActivity extends Activity implements View.OnClickListener,
+ConnectionCallbacks, OnConnectionFailedListener{
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

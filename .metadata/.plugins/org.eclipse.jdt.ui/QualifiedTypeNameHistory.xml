@@ -5,9 +5,16 @@
 <fullyQualifiedTypeName name="android.content.IntentSender.SendIntentException"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="com.google.android.gms.common.api.Status"/>
-<fullyQualifiedTypeName name="com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks"/>
-<fullyQualifiedTypeName name="com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener"/>
 <fullyQualifiedTypeName name="com.google.android.gms.plus.model.people.Person"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="android.graphics.BitmapFactory"/>
+<fullyQualifiedTypeName name="android.os.AsyncTask"/>
+<fullyQualifiedTypeName name="com.google.android.gms.plus.Plus"/>
+<fullyQualifiedTypeName name="com.google.android.gms.plus.PlusClient.OnAccessRevokedListener"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.Status"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks"/>
+<fullyQualifiedTypeName name="android.content.DialogInterface.OnClickListener"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener"/>
 </qualifiedTypeNameHistroy>

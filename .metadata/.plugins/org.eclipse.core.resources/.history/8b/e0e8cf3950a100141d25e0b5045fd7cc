@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_login">
+    <!-- padding 内边距   layout_margin 外边距
+  		android:layout_alignParentTop 布局的位置是否处于顶部 -->
+  		
+  	<RelativeLayout 
+  	    android:id="@+id/login_div"
+  	    android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:padding="15dip"        
+    	android:layout_margin="15dip" 
+    	android:background="@drawable/background_login_div" >
+  		
+  		<com.google.android.gms.common.SignInButton
+		    android:id="@+id/sign_in_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" />
+  	</RelativeLayout>
+
+  	
+  	<RelativeLayout 
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content" >
+  	<Button
+        android:id="@+id/btn_sign_out"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_logout_from_google"
+        android:visibility="gone"
+        android:layout_marginBottom="10dp"/>
+ 
+    <Button
+        android:id="@+id/btn_revoke_access"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_revoke_access"
+        android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

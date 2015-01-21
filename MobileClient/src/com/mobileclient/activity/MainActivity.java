@@ -52,6 +52,9 @@ import com.mobileclient.utils.RandomUtil;
  * 
  */
 public class MainActivity extends ActionBarActivity {
+	
+	
+	private static final String TAG = "MainActivity";
 
 	/**
 	 * 登陆按钮
@@ -60,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
 	/**
 	 * facebook登陆按钮
 	 */
-	private LoginButton fbLoginBtn = null;
+	private Button fbLoginBtn = null;
 	
 	/**
 	 * google+
@@ -89,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		public void call(Session session, SessionState state,
 				Exception exception) {
-			// onSessionStateChange(session, state, exception);
+			 onSessionStateChange(session, state, exception);
 		}
 	};
 
@@ -99,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		// 获得登陆按钮，账户,密码
 		loginBtn = (Button) findViewById(R.id.signin_button);
-		fbLoginBtn = (LoginButton) findViewById(R.id.fb_button);
+		fbLoginBtn = (Button) findViewById(R.id.fb_button);
 		userName = (EditText) findViewById(R.id.username_edit);
 		password = (EditText) findViewById(R.id.password_edit);
 		
@@ -215,7 +218,7 @@ public class MainActivity extends ActionBarActivity {
 			public void onClick(View v) {
 				Log.i("GooglePlusActivity","准备跳转GooglePlusActivity...");
 				Intent intent = new Intent(MainActivity.this,
-						GooglePlusActivity.class);
+						GoogleApiActivity.class);
 				startActivity(intent);
 				finish();// 关闭自己
 			}
@@ -224,28 +227,32 @@ public class MainActivity extends ActionBarActivity {
 		/**
 		 * facebook跳转按钮
 		 */
-		// fbLoginBtn.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// Intent intent=new Intent(MainActivity.this,MyGreatActivity.class);
-		// startActivity(intent);
-		// finish();//停止当前的Activity
-		// }
-		// });
+		 fbLoginBtn.setOnClickListener(new OnClickListener() {
+		
+		 @Override
+		 public void onClick(View arg0) {
+			 	Log.i("FacebookActivity","准备跳转FacebookActivity...");
+				Intent intent = new Intent(MainActivity.this,
+						FacebookActivity.class);
+				startActivity(intent);
+				finish();// 关闭自己
+//			 	//fbLoginBtn.setTextColor(Color.TRANSPARENT);
+//				fbLoginBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//				// fbLoginBtn.setBackgroundResource(R.drawable.login_fb);
+//
+//				fbLoginBtn.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
+//							@Override
+//							public void onUserInfoFetched(GraphUser user) {
+//								//uiHelper = new UiLifecycleHelper(this, callback); // 这个是回调用的辅助工具可以在这个callback上做一些处理
+//								MainActivity.this.user = user;
+//								
+//								updateUI();
+//							}
+//						});
+				}
+		 });
 
-		//fbLoginBtn.setTextColor(Color.TRANSPARENT);
-		fbLoginBtn.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-		// fbLoginBtn.setBackgroundResource(R.drawable.login_fb);
-
-		fbLoginBtn.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
-					@Override
-					public void onUserInfoFetched(GraphUser user) {
-						//uiHelper = new UiLifecycleHelper(this, callback); // 这个是回调用的辅助工具可以在这个callback上做一些处理
-						MainActivity.this.user = user;
-						updateUI();
-					}
-				});
+		
 
 	}
 
@@ -266,6 +273,18 @@ public class MainActivity extends ActionBarActivity {
 	// updateUI();
 	// }
 
+	protected void onSessionStateChange(Session session, SessionState state,
+			Exception exception) {
+		boolean enableButtons = (session != null && session.isOpened());
+		if (enableButtons && user != null) {
+			// 在这里可以获取到用Facebook登录的用户user，通过user.getXX可以获取到你想要的信息。
+			// 也就是在使用Facebook登录后的一些跳转处理
+			Log.i(TAG, user.getFirstName());
+			Toast.makeText(MainActivity.this, "FirstName:"+user.getFirstName()+"userName:"+user.getUsername()+",email:"+user.getProperty("email"),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	private void updateUI() {
 		Session session = Session.getActiveSession();
 		boolean enableButtons = (session != null && session.isOpened());
@@ -273,7 +292,9 @@ public class MainActivity extends ActionBarActivity {
 		if (enableButtons && user != null) {
 			// 在这里可以获取到用Facebook登录的用户user，通过user.getXX可以获取到你想要的信息。
 			// 也就是在使用Facebook登录后的一些跳转处理
-			Log.i("FacebookLogin", user.getFirstName());
+			Log.i(TAG, user.getFirstName());
+			Toast.makeText(MainActivity.this, "FirstName:"+user.getFirstName()+"userName:"+user.getUsername()+",email:"+user.getProperty("email"),
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 

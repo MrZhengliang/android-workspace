@@ -6,4 +6,8 @@
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.Status"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks"/>
+<fullyQualifiedTypeName name="com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener"/>
+<fullyQualifiedTypeName name="com.google.android.gms.plus.model.people.Person"/>
 </qualifiedTypeNameHistroy>

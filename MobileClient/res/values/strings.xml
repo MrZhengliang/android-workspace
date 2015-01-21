@@ -25,11 +25,18 @@
 	
 	<string name="login_sina_signin">新浪</string>
 	<string name="login_google_plus_signin">Google+</string>
+	<string name="login_facebook_signin">Facebook</string>
 		
 	
 	<!-- My First Android app -->
-	<string name="facebook_app_id">956404621037917</string>
-	<string name="facebook_app_secret">95d6d1db30df1189c14d718c90d6a61e</string>
+	<string name="facebook_app_id">1540538392868058</string>
+	<string name="facebook_app_secret">09c3528812aac42a6cb85c83d7c1242d</string>
+	
+	<string name="query">Query</string>
+	<string name="multiQuery">Multi-query</string>
 	
 	
+	<!-- Button text -->
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
 </resources>

@@ -35,6 +35,8 @@ public class SignInActivity extends Activity implements OnClickListener,
         PlusClient.ConnectionCallbacks, PlusClient.OnConnectionFailedListener,
         PlusClient.OnAccessRevokedListener {
 
+	private static final String TAG = "SignInActivity";
+	
     private static final int DIALOG_GET_GOOGLE_PLAY_SERVICES = 1;
 
     private static final int REQUEST_CODE_SIGN_IN = 1;
@@ -82,13 +84,13 @@ public class SignInActivity extends Activity implements OnClickListener,
         switch(view.getId()) {
             case R.id.sign_in_button:
                 int available = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-                Log.i("Sign...","开始连接..."+available);
+                Log.i(TAG,"开始连接..."+available);
                 if (available != ConnectionResult.SUCCESS) {
-                	Log.i("Sign...","未连接上...");
+                	Log.i(TAG,"未连接上...");
                     showDialog(DIALOG_GET_GOOGLE_PLAY_SERVICES);
                     return;
                 }
-                Log.i("Sign...","连接上...");
+                Log.i(TAG,"连接上...");
                 try {
                     mSignInStatus.setText(getString(R.string.signing_in_status));
                     mConnectionResult.startResolutionForResult(this, REQUEST_CODE_SIGN_IN);
@@ -163,6 +165,7 @@ public class SignInActivity extends Activity implements OnClickListener,
                 ? mPlusClient.getCurrentPerson().getDisplayName()
                 : getString(R.string.unknown_person);
         mSignInStatus.setText(getString(R.string.signed_in_status, currentPersonName));
+        Log.i("currentPersonName:",currentPersonName);
         updateButtons(true /* isSignedIn */);
     }
 

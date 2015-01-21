@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_login">
+    <!-- padding 内边距   layout_margin 外边距
+  		android:layout_alignParentTop 布局的位置是否处于顶部 -->
+  		
+  	<RelativeLayout 
+  	    android:id="@+id/login_div"
+  	    android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:padding="15dip"        
+    	android:layout_margin="15dip" 
+    	android:background="@drawable/background_login_div" >
+  		<!-- 账号 -->
+    	<TextView 
+    		android:id="@+id/login_user_input"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_alignParentTop="true"
+    		android:layout_marginTop="5dp"
+    		android:text="@string/login_label_username"
+    		style="@style/normalText"/>
+    	<EditText 
+    		android:id="@+id/username_edit"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:hint="@string/login_username_hint"
+    		android:layout_below="@id/login_user_input"
+    		android:singleLine="true"
+    		android:inputType="text"/>
+      <!-- 密码 text -->
+      <TextView 
+      	android:id="@+id/login_password_input"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_below="@id/username_edit"
+      	android:layout_marginTop="3dp"
+      	android:text="@string/login_label_password"
+      	style="@style/normalText"/>
+      <EditText 
+      	android:id="@+id/password_edit"
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content"
+      	android:layout_below="@id/login_password_input"
+      	android:password="true"
+      	android:singleLine="true"
+      	android:inputType="textPassword" />
+      <!-- 登录button -->
+      <Button 
+      	android:id="@+id/signin_button"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_below="@id/password_edit"
+      	android:layout_alignRight="@id/password_edit"
+      	android:layout_marginRight="20dp"
+      	android:text="@string/login_label_signin"
+      	android:background="@drawable/blue_button" />
+      
+     
+     
+     
+     
+  	</RelativeLayout>
+  
+  	<RelativeLayout 
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content" >
+     <TextView  android:id="@+id/register_link"
+         android:text="@string/login_register_link"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="15dp"
+         android:textColor="#888"
+         android:textColorLink="#FF0066CC" />
+     <!-- Google登录button -->
+     <Button 
+      	android:id="@+id/google_plus_button"
+      	android:layout_width="60dp"
+      	android:layout_height="wrap_content"
+      	android:layout_below="@id/register_link"
+      	android:layout_marginLeft="20sp"
+      	android:textColor="#fff"
+      	android:text="@string/login_google_plus_signin"
+      	android:background="@drawable/blue_button" />
+      <!-- 新浪登录button -->
+      <Button 
+      	android:id="@+id/sina_button"
+      	android:layout_width="40dp"
+      	android:layout_height="wrap_content"
+      	android:layout_below="@id/register_link"
+      	android:layout_marginLeft="90sp"
+      	android:text="@string/login_sina_signin"
+      	android:background="@drawable/blue_button" />
+     
+      
+      <!-- Facebook登录button -->
+       <!-- Google登录button -->
+     <Button 
+      	android:id="@+id/google_plus_button"
+      	android:layout_width="60dp"
+      	android:layout_height="wrap_content"
+      	android:layout_below="@id/register_link"
+      	android:layout_marginLeft="20sp"
+      	android:textColor="#fff"
+      	android:text="@string/login_google_plus_signin"
+      	android:background="@drawable/blue_button" />
+     <com.facebook.widget.LoginButton
+                android:id="@+id/fb_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="10sp"
+                android:layout_marginLeft="20sp"
+                android:layout_below="@id/google_plus_button"
+                facebook:confirm_logout="false"
+                facebook:fetch_user_info="true"
+                />
+     
+    <ImageView android:id="@+id/miniTwitter_logo"
+        android:src="@drawable/com_facebook_logo"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="25dp" />
+    </RelativeLayout>
+</LinearLayout>

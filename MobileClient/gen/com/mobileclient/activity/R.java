@@ -1583,12 +1583,14 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060024;
         public static final int action_menu_presenter=0x7f060025;
         public static final int action_mode_close_button=0x7f060032;
-        public static final int action_settings=0x7f060075;
+        public static final int action_settings=0x7f06007d;
         public static final int activity_chooser_view_content=0x7f060033;
         public static final int always=0x7f06001a;
         public static final int beginning=0x7f06001f;
         public static final int bottom=0x7f06000a;
         public static final int box_count=0x7f060009;
+        public static final int btn_revoke_access=0x7f060073;
+        public static final int btn_sign_out=0x7f060072;
         public static final int button=0x7f060008;
         public static final int center=0x7f06000d;
         public static final int checkbox=0x7f06003b;
@@ -1628,23 +1630,26 @@ containing a value of this type.
         public static final int expanded_menu=0x7f06003a;
         public static final int fb_button=0x7f060053;
         public static final int google_plus_button=0x7f060051;
-        public static final int h_list_view=0x7f060070;
+        public static final int h_list_view=0x7f060078;
         public static final int home=0x7f060022;
         public static final int homeAsUp=0x7f060014;
         public static final int hybrid=0x7f060004;
         public static final int icon=0x7f060038;
         public static final int ifRoom=0x7f060019;
         public static final int image=0x7f060035;
+        public static final int imgProfilePic=0x7f060075;
         public static final int inline=0x7f06000b;
         public static final int large=0x7f060006;
         public static final int left=0x7f06000e;
         public static final int listMode=0x7f060010;
         public static final int list_item=0x7f060037;
+        public static final int llProfile=0x7f060074;
         public static final int login_div=0x7f06004a;
         public static final int login_password_input=0x7f06004d;
         public static final int login_user_input=0x7f06004b;
         public static final int middle=0x7f060020;
         public static final int miniTwitter_logo=0x7f060054;
+        public static final int multiQueryButton=0x7f060070;
         public static final int never=0x7f060018;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
@@ -1652,6 +1657,7 @@ containing a value of this type.
         public static final int picker_subtitle=0x7f060064;
         public static final int progress_circular=0x7f060026;
         public static final int progress_horizontal=0x7f060027;
+        public static final int queryButton=0x7f06006f;
         public static final int radio=0x7f06003d;
         public static final int register_link=0x7f060050;
         public static final int right=0x7f06000f;
@@ -1666,13 +1672,13 @@ containing a value of this type.
         public static final int search_plate=0x7f060044;
         public static final int search_src_text=0x7f060045;
         public static final int search_voice_btn=0x7f060049;
-        public static final int send_div=0x7f060071;
-        public static final int send_sina_button=0x7f060074;
+        public static final int send_div=0x7f060079;
+        public static final int send_sina_button=0x7f06007c;
         public static final int shortcut=0x7f06003c;
         public static final int showCustom=0x7f060016;
         public static final int showHome=0x7f060013;
         public static final int showTitle=0x7f060015;
-        public static final int sign_in_button=0x7f06006f;
+        public static final int sign_in_button=0x7f060071;
         public static final int signin_button=0x7f06004f;
         public static final int sina_button=0x7f060052;
         public static final int small=0x7f060005;
@@ -1684,11 +1690,13 @@ containing a value of this type.
         public static final int title=0x7f060039;
         public static final int top=0x7f06000c;
         public static final int top_action_bar=0x7f06002e;
+        public static final int txtEmail=0x7f060077;
+        public static final int txtName=0x7f060076;
         public static final int up=0x7f06002f;
         public static final int useLogo=0x7f060012;
         public static final int username_edit=0x7f06004c;
-        public static final int weibo_content_edit=0x7f060073;
-        public static final int weibo_content_input=0x7f060072;
+        public static final int weibo_content_edit=0x7f06007b;
+        public static final int weibo_content_input=0x7f06007a;
         public static final int withText=0x7f06001b;
     }
     public static final class integer {
@@ -1759,10 +1767,11 @@ containing a value of this type.
         public static final int com_facebook_tooltip_bubble=0x7f030026;
         public static final int com_facebook_usersettingsfragment=0x7f030027;
         public static final int facebook_login=0x7f030028;
-        public static final int google_plus=0x7f030029;
-        public static final int note_main=0x7f03002a;
-        public static final int sina_weibo=0x7f03002b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002c;
+        public static final int google_api=0x7f030029;
+        public static final int google_plus=0x7f03002a;
+        public static final int note_main=0x7f03002b;
+        public static final int sina_weibo=0x7f03002c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002d;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
@@ -1834,6 +1843,10 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f070014;
+        /**  Button text 
+         */
+        public static final int btn_logout_from_google=0x7f07005e;
+        public static final int btn_revoke_access=0x7f07005f;
         public static final int com_facebook_choose_friends=0x7f07002c;
         public static final int com_facebook_dialogloginactivity_ok_button=0x7f07001b;
         public static final int com_facebook_image_download_unknown_error=0x7f070037;
@@ -1936,13 +1949,14 @@ containing a value of this type.
         public static final int common_signin_button_text_long=0x7f070013;
         /**  My First Android app 
          */
-        public static final int facebook_app_id=0x7f070059;
-        public static final int facebook_app_secret=0x7f07005a;
+        public static final int facebook_app_id=0x7f07005a;
+        public static final int facebook_app_secret=0x7f07005b;
         public static final int hello_world=0x7f070046;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f07001a;
         public static final int login=0x7f070049;
+        public static final int login_facebook_signin=0x7f070059;
         public static final int login_google_plus_signin=0x7f070058;
         public static final int login_label_fb_signin=0x7f070052;
         public static final int login_label_password=0x7f070050;
@@ -1951,7 +1965,9 @@ containing a value of this type.
         public static final int login_register_link=0x7f070053;
         public static final int login_sina_signin=0x7f070057;
         public static final int login_username_hint=0x7f07004f;
+        public static final int multiQuery=0x7f07005d;
         public static final int password=0x7f07004b;
+        public static final int query=0x7f07005c;
         public static final int register=0x7f070048;
         public static final int repwd=0x7f07004c;
         public static final int send_sina_weibo=0x7f070054;

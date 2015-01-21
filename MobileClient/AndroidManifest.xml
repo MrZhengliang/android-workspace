@@ -18,6 +18,7 @@
     <!--  Required if we need to invalidate access tokens -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
        
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     
     <application
         android:allowBackup="true"
@@ -39,6 +40,7 @@
         <activity android:name=".SinaWeiboActivity"/>
         <activity android:name=".MyGreatActivity"/>   
         <activity android:name=".GooglePlusActivity"/>
+        <activity android:name=".GoogleApiActivity"/>
         
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />

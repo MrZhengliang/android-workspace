@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FbButton"></style>
+</resources>
+
+<style name="FbButton">
+        <item name="android:background">@android:drawable/edit_text</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>

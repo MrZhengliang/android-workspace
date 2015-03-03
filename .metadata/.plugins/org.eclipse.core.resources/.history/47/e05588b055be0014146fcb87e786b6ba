@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.splatform.watershow.MainActivity$PlaceholderFragment" >    
+
+    
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/screen_main"
+        android:visibility="visible"
+        android:orientation="vertical">
+    
+    	
+    	
+    	
+    	<LinearLayout
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:orientation="horizontal"
+    	    android:layout_marginBottom="20dp">
+    	    
+            
+    	
+    	</LinearLayout>
+
+    	<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+    	
+    	   
+    	   	
+    	</LinearLayout>
+    	<LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+    	
+      <!-- 测试购买button -->
+      <Button 
+      	android:id="@+id/test_buy_button"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_marginRight="20dp"
+      	android:text="@string/hello_world"/>
+            
+      
+      
+      
+      <Button 
+      	android:id="@+id/test_consume_button"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_marginRight="20dp"
+      	android:text="@string/hello_world"/>
+    	   	
+      
+      <Button 
+      	android:id="@+id/test_notify_button"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:layout_marginRight="20dp"
+      	android:text="@string/hello_world"/>
+    	</LinearLayout>
+    	
+    </LinearLayout>
+</RelativeLayout>

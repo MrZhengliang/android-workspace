@@ -1,0 +1,23 @@
+package com.splatform.watershow.listener;
+
+import android.support.v7.internal.widget.AdapterViewICS.OnItemClickListener;
+import android.view.View;
+
+public class DrawerItemClickListener implements OnItemClickListener {
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

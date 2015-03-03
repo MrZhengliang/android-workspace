@@ -1,0 +1,12 @@
+<LinearLayout
+    android:id="@+id/screen_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context="com.splatform.watershow.MainActivity$PlaceholderFragment" >
+
+    
+
+</LinearLayout>

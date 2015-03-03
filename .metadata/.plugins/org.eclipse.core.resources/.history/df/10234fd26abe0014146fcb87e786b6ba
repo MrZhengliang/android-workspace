@@ -1,0 +1,10 @@
+package com.splatform.watershow.listener;
+
+import android.support.v7.internal.widget.AdapterViewICS.OnItemClickListener;
+import android.view.View;
+
+public class DrawerItemClickListener implements OnItemClickListener {
+
+	
+
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">thirdfacebook</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+	<string name="menu_settings">Settings</string>
+    <string name="app_id">956404621037917</string>
+    
+	<string name="send_request">Send Request</string>
+	<string name="query">Query</string>
+	<string name="multiQuery">Multi-query</string>
+	
+	<string name="f">f</string>
+</resources>

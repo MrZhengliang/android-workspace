@@ -1,0 +1,707 @@
+package com.splatform.watershow;
+
+/* Copyright (c) 2012 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.Toast;
+
+
+
+
+/**
+ * Example game using in-app billing version 3.
+ *
+ * Before attempting to run this sample, please read the README file. It
+ * contains important information on how to set up this project.
+ *
+ * All the game-specific logic is implemented here in MainActivity, while the
+ * general-purpose boilerplate that can be reused in any app is provided in the
+ * classes in the util/ subdirectory. When implementing your own application,
+ * you can copy over util/*.java to make use of those utility classes.
+ *
+ * This game is a simple "driving" game where the player can buy gas
+ * and drive. The car has a tank which stores gas. When the player purchases
+ * gas, the tank fills up (1/4 tank at a time). When the player drives, the gas
+ * in the tank diminishes (also 1/4 tank at a time).
+ *
+ * The user can also purchase a "premium upgrade" that gives them a red car
+ * instead of the standard blue one (exciting!).
+ *
+ * The user can also purchase a subscription ("infinite gas") that allows them
+ * to drive without using up any gas while that subscription is active.
+ *
+ * It's important to note the consumption mechanics for each item.
+ *
+ * PREMIUM: the item is purchased and NEVER consumed. So, after the original
+ * purchase, the player will always own that item. The application knows to
+ * display the red car instead of the blue one because it queries whether
+ * the premium "item" is owned or not.
+ *
+ * INFINITE GAS: this is a subscription, and subscriptions can't be consumed.
+ *
+ * GAS: when gas is purchased, the "gas" item is then owned. We consume it
+ * when we apply that item's effects to our app's world, which to us means
+ * filling up 1/4 of the tank. This happens immediately after purchase!
+ * It's at this point (and not when the user drives) that the "gas"
+ * item is CONSUMED. Consumption should always happen when your game
+ * world was safely updated to apply the effect of the purchase. So,
+ * in an example scenario:
+ *
+ * BEFORE:      tank at 1/2
+ * ON PURCHASE: tank at 1/2, "gas" item is owned
+ * IMMEDIATELY: "gas" is consumed, tank goes to 3/4
+ * AFTER:       tank at 3/4, "gas" item NOT owned any more
+ *
+ * Another important point to notice is that it may so happen that
+ * the application crashed (or anything else happened) after the user
+ * purchased the "gas" item, but before it was consumed. That's why,
+ * on startup, we check if we own the "gas" item, and, if so,
+ * we have to apply its effects to our world and consume it. This
+ * is also very important!
+ *
+ * @author Bruno Oliveira (Google)
+ */
+public class MainActivity extends Activity {
+	
+
+    
+    private static final int RC_SIGN_IN = 0;
+    
+    
+    private boolean mSignInClicked;
+    /**
+     * A flag indicating that a PendingIntent is in progress and prevents us
+     * from starting further intents.
+     */
+    private boolean mIntentInProgress;
+  
+	
+	
+    
+    
+    
+    
+    // Debug tag, for logging
+    static final String TAG = "MainActivity";
+
+    // Does the user have the premium upgrade?
+    boolean mIsPremium = false;
+
+    // Does the user have an active subscription to the infinite gas plan?
+    boolean mSubscribedToInfiniteGas = false;
+
+    /**
+	 * 测试购买按钮
+	 */
+	private Button testBuyBtn = null;
+	/**
+	 * 购买成功通知
+	 */
+	private Button testNotifyBtn = null;
+	/**
+	 * 消耗完成通知
+	 */
+	private Button testConsumeBtn = null;
+	
+	
+    // SKUs for our products: the premium upgrade (non-consumable) and gas (consumable)
+    //static final String SKU_PREMIUM = "premium";
+    //static final String SKU_GAS = "gas";
+    //static final String SKU_INFINITE_GAS = "infinite_gas";
+    
+    static final String SKU_PREMIUM = "premium";
+    static final String SKU_GAS = "android.test.purchased";
+    
+    static final String SKU_ANDROID_TEST_PURCHASE_GOOD = "android.test.purchased";
+    static final String SKU_ANDROID_TEST_CANCEL_GOOD = "android.test.canceled";
+    
+    // SKU for our subscription (infinite gas)
+    static final String SKU_INFINITE_GAS = "android.test.canceled";
+    
+
+    //支付服务端api地址
+    //参数{“aid”:””,” issuerId”:””, “cardCode”:””, “teamId”:””, “clientIp”:””, “signature”:””}
+    static final String POST_PAY_SERVER_PREPURCHASE = "http://66.150.177.103:82/json/payment/googleplay/prepurchase.post";
+    
+    static final String POST_PAY_SERVER_FINISHED = "http://66.150.177.103:82/json/payment/googleplay/save.post";
+    
+    static final String POST_PAY_SERVER_CONSUME = "http://66.150.177.103:82/json/payment/googleplay/consume.post";
+    
+    
+    // (arbitrary) request code for the purchase flow
+    static final int RC_REQUEST = 10001;
+
+//    // Graphics for the gas gauge
+//    static int[] TANK_RES_IDS = {R.drawable.gas0, R.drawable.gas1, R.drawable.gas2,
+//                                   R.drawable.gas3, R.drawable.gas4 };
+
+    // How many units (1/4 tank is our unit) fill in the tank.
+    static final int TANK_MAX = 4;
+
+    // Current amount of gas in tank, in units
+    int mTank;
+    
+    String payload = "";
+
+    
+    
+    
+    
+    
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // 去掉窗口标题
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
+        setContentView(R.layout.activity_main);
+        
+        // Bind Service
+//     	final boolean blnBind = bindService(new Intent(
+//     				"com.android.vending.billing.InAppBillingService.BIND"),
+//     				mServiceConn, Context.BIND_AUTO_CREATE);
+//      
+//     		
+//     	Log.i(TAG, "bindService - return " + String.valueOf(blnBind));
+        
+     	
+        
+//        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
+//        serviceIntent.setPackage("com.android.vending");
+//        bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
+
+        testBuyBtn = (Button) findViewById(R.id.test_buy_button);
+        //点击购买按钮
+        testBuyBtn.setOnClickListener(new OnClickListener() {
+
+     			@Override
+     			public void onClick(View arg0) {
+     				Toast.makeText(MainActivity.this, "购买请求中...", Toast.LENGTH_LONG)
+     						.show();
+     				
+     				String orderId = "";
+     	         	
+
+//     				// 服务端接口地址
+//     				String httpUrl = "http://172.18.70.58:8080/splatform-s3h4-m/unite/app_login.do";
+//     				HttpPost httpRequest = new HttpPost(httpUrl);
+//     				// 去除用户名和密码空格
+//     				String usercode = userName.getText().toString().trim();// 用户名
+//     				String pwd = password.getText().toString().trim();// 密码
+//     				rand = RandomUtil.random(6);
+//     				Log.i("Login", usercode);
+//     				Log.i("Login", pwd);
+//     				// 设置参数
+//     				List<NameValuePair> params = new ArrayList<NameValuePair>();
+//     				params.add(new BasicNameValuePair("usercode", usercode));
+//     				params.add(new BasicNameValuePair("password", pwd));
+//     				params.add(new BasicNameValuePair("rand", rand));
+//     				HttpEntity httpentity = null;
+//     				try {
+//     					httpentity = new UrlEncodedFormEntity(params, "utf8");
+//     				} catch (UnsupportedEncodingException e) {
+//     					e.printStackTrace();
+//     				}
+//     				// 请求体
+//     				httpRequest.setEntity(httpentity);
+//
+//     				HttpClient httpclient = new DefaultHttpClient();
+//     				HttpResponse httpResponse = null;
+//     				try {
+//     					httpResponse = httpclient.execute(httpRequest);
+//     				} catch (ClientProtocolException e) {
+//     					Log.e("Login", "客户端-服务端通讯失败");
+//     					Toast.makeText(MainActivity.this, "客户端-服务端通讯失败",
+//     							Toast.LENGTH_SHORT).show();
+//     					// e.printStackTrace();
+//     				} catch (IOException e) {
+//     					Log.e("Login", "客户端-服务端通讯失败");
+//     					// e.printStackTrace();
+//     					Toast.makeText(MainActivity.this, "客户端-服务端通讯失败",
+//     							Toast.LENGTH_SHORT).show();
+//     				}
+//     				String strResult = null;
+//     				if (httpResponse.getStatusLine().getStatusCode() == 200) {
+//     					try {
+//     						strResult = EntityUtils.toString(httpResponse
+//     								.getEntity());
+//     					} catch (ParseException e) {
+//     						e.printStackTrace();
+//     					} catch (IOException e) {
+//     						e.printStackTrace();
+//     					}
+//     					Log.i("Login", strResult);
+//     					Toast.makeText(MainActivity.this, strResult,
+//     							Toast.LENGTH_SHORT).show();
+//     					// 登陆成功，跳转到发fb页面
+//     					try {
+//     						JSONObject jsonResult = new JSONObject(strResult);
+//     						if (jsonResult.get("data").equals("0")) {
+//     							Intent intent = new Intent(MainActivity.this,
+//     									MainActivity.class);
+//     							startActivity(intent);
+//     							finish();// 关闭自己
+//     						} else {
+//     							Toast.makeText(MainActivity.this,
+//     									"" + jsonResult.get("msg"),
+//     									Toast.LENGTH_SHORT).show();
+//     						}
+//     					} catch (Exception e) {
+//     						Log.e("Login", "处理登陆结果失败");
+//     					}
+//
+//     				} else {
+//     					Toast.makeText(MainActivity.this, "请求错误",
+//     							Toast.LENGTH_SHORT).show();
+//     				}
+
+     			}
+     		});
+        
+        
+        
+        testNotifyBtn = (Button) findViewById(R.id.test_notify_button);
+        
+        testConsumeBtn = (Button) findViewById(R.id.test_consume_button);
+        
+        
+    }
+
+   
+    
+    
+    //消耗完成通知支付服务端
+    public class ASyncTaskConsume extends AsyncTask<String, Integer, String>{         
+        @Override  
+//      后台执行，比较耗时的操作都可以放在这里。  
+//      注意这里不能直接操作UI。通常需要较长的时间。在执行过程中可以调用  
+//      publishProgress()来更新任务的进度  
+        protected String doInBackground(String... params) {  
+            Log.i(TAG, "doInBackground(Params... params) called");    
+            // TODO: http request.
+         	String result = "";
+         	try {
+         		String appId = "1";
+	            String keyPwd = "5AA356F1EAC00BBFE15E1434E9C8CF37";
+	            String accountId = "0001";
+	            String orderId = params[2];
+	            String packageName = params[5];
+	            String productId = params[1];
+	            String token = params[4];
+	            String developerPayload = params[3];
+	            String clientIp = "192.168.0.136";
+	            //{“aid”:””,“serverId”:””,”packageName”:””,“productId”:””,”token”:””,”developerPayload”:””, “clientIp”:””, “signature”:””}
+	            String signature = doSign(appId,accountId,orderId,packageName,productId,token,developerPayload,clientIp,keyPwd);
+                //消耗订单通知
+	            result = notifyConsumeSnailOrder(params[0], appId, keyPwd, accountId,orderId,packageName,productId, token,developerPayload,clientIp,signature);
+         		Log.i(TAG, "notify consume result..."+result);    
+             } catch (Exception e) {
+                 Log.e(TAG, e.getLocalizedMessage());
+             }   
+             return result;    
+        }      
+        @Override  
+        //此方法在主线程执行，任务执行的结果作为此方法的参数被传进来  
+        protected void onPostExecute(String result) {  
+            Log.d(TAG, "后台任务执行结束");  
+            Log.d(TAG, "result..."+result);
+            super.onPostExecute(result);
+        }  
+        @Override  
+        protected void onPreExecute() {  
+            super.onPreExecute();  
+        }  
+        @Override  
+        protected void onProgressUpdate(Integer... values) {  
+            //本函数当调用publishProgress()时会被调用一般在 在doInBackground函数中调用  
+            //但是这里取到的是一个数组,所以要用values[0]来取值,第n个参数就用values[n]来取值    
+            super.onProgressUpdate(values);  
+        }  
+        @Override  
+        protected void onCancelled() {  
+            //当调用task.cancel(boolean)会调用本函数  
+            super.onCancelled();  
+        }
+    }
+    
+    /**
+     * 通知消耗订单
+     * @param string
+     * @param appId
+     * @param keyPwd
+     * @param accountId
+     * @param string2
+     * @param string3
+     * @param string4
+     * @param clientIp
+     * @param signature
+     * @return
+     */
+    private String notifyConsumeSnailOrder(String uri, String appId,
+			String keyPwd, String accountId, String orderId,
+			String packageName, String productId, String token,String developerPayload,String clientIp,
+			String signature) {
+    	//返回处理结果
+		String result = "";
+		
+		HttpPost httpRequest = new HttpPost(uri);
+		Log.i(TAG, uri);
+		// 设置参数
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		List<NameValuePair> postParams = new ArrayList<NameValuePair>();
+		//系统参数
+		httpRequest.addHeader("H_APPID", appId);
+		//{“aid”:””,“serverId”:””,”packageName”:””,“productId”:””,”token”:””,”developerPayload”:””, “clientIp”:””, “signature”:””}
+
+		//业务参数
+		params.add(new BasicNameValuePair("aid", accountId));
+		params.add(new BasicNameValuePair("orderId", orderId));
+		params.add(new BasicNameValuePair("packageName", packageName));
+		params.add(new BasicNameValuePair("productId", productId));
+		params.add(new BasicNameValuePair("token", token));
+		params.add(new BasicNameValuePair("developerPayload", developerPayload));
+		params.add(new BasicNameValuePair("clientIp", clientIp));
+//		params.add(new BasicNameValuePair("signature", signature));
+		JSONObject jsonObject = new JSONObject();
+		try {
+			for (NameValuePair pair : params) {
+				jsonObject.put(pair.getName(), pair.getValue());
+			}
+			jsonObject.put("signature", signature);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		postParams.add(new BasicNameValuePair("params", jsonObject.toString()));
+		
+		
+		Log.d(TAG, "请求postParams:"+postParams.toString());
+		HttpEntity httpentity = null;
+		try {
+			httpentity = new UrlEncodedFormEntity(postParams, "utf8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		// 请求体
+		httpRequest.setEntity(httpentity);
+
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpResponse httpResponse = null;
+		try {
+			httpResponse = httpclient.execute(httpRequest);
+		} catch (ClientProtocolException e) {
+			Log.e(TAG, "客户端-服务端通讯失败");
+			e.printStackTrace();
+		} catch (Exception e) {
+			Log.e(TAG, "客户端-服务端通讯失败");
+			e.printStackTrace();
+		}
+		String strResult = null;
+		if (httpResponse.getStatusLine().getStatusCode() == 200) {
+			try {
+				strResult = EntityUtils.toString(httpResponse
+						.getEntity());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Log.i("ZZZZZZZ","ccccc...:"+ strResult);
+			// 请求成功
+			try {
+				JSONObject jsonResult = new JSONObject(strResult);
+				
+				
+				Log.d(TAG, "code:"+jsonResult.getInt("code"));
+				if (jsonResult.getInt("code")==1) {
+					//返回订单号
+					result = jsonResult.get("msg").toString();
+					Log.d(TAG, "Pay Server notify order Consume success:"+result);
+					return result;
+				} else {
+					Log.d(TAG, "Pay Server notify order Consume failure:");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e(TAG, "处理结果失败");
+			}
+
+		} else {
+			Toast.makeText(MainActivity.this, "请求错误",
+					Toast.LENGTH_SHORT).show();
+		}
+		return result;
+	}
+
+	
+    
+    /**
+     * 生成签名3
+     * @param appId
+     * @param accountId
+     * @param cardCode
+     * @param teamId
+     * @param clientIp
+     * @param keyPwd
+     * @return
+     */
+    private String doSign(String appId, String accountId, String cardCode,
+			String teamId, String clientIp, String keyPwd) {
+		return stringToMD5(appId+accountId+ cardCode + teamId + clientIp +keyPwd);
+	}
+    
+    /**
+     * 生成签名1
+     * @param appId
+     * @param accountId
+     * @param cardCode
+     * @param teamId
+     * @param clientIp
+     * @param keyPwd
+     * @return
+     */
+    private String doSign(String appId,String accountId,String orderId,String packageName,String productId,
+    		String token,String developerPayload,String clientIp,String keyPwd) {
+		return stringToMD5(appId+accountId+ orderId + packageName + productId + token + developerPayload + clientIp +keyPwd);
+	}
+    //[appid]+ aid + issuerId + ordereId + productId  + developerPayload + clientIp + [key_pwd]
+    /**
+     * 生成签名2
+     * @param appId
+     * @param accountId
+     * @param issuerId
+     * @param ordereId
+     * @param productId
+     * @param developerPayload
+     * @param clientIp
+     * @param keyPwd
+     * @return
+     */
+    private String doSign(String appId, String accountId,String ordereId,
+			String purchaseToken, String developerPayload,String clientIp, String keyPwd) {
+		return stringToMD5(appId+accountId+ ordereId + purchaseToken+ developerPayload +clientIp +keyPwd);
+	}
+    
+	/**
+	 * 将字符串转成MD5值
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static String stringToMD5(String string) {
+		byte[] hash;
+		try {
+			hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		StringBuilder hex = new StringBuilder(hash.length * 2);
+		for (byte b : hash) {
+			if ((b & 0xFF) < 0x10)
+				hex.append("0");
+			hex.append(Integer.toHexString(b & 0xFF));
+		}
+		return hex.toString();
+	}
+    
+
+	
+
+    
+
+    // Drive button clicked. Burn gas!
+    public void onDriveButtonClicked(View arg0) {
+        Log.d(TAG, "Drive button clicked.");
+        if (!mSubscribedToInfiniteGas && mTank <= 0) alert("Oh, no! You are out of gas! Try buying some!");
+        else {
+            if (!mSubscribedToInfiniteGas) --mTank;
+            saveData();
+            alert("Vroooom, you drove a few miles.");
+            updateUi();
+            Log.d(TAG, "Vrooom. Tank is now " + mTank);
+        }
+    }
+
+    // We're being destroyed. It's important to dispose of the helper here!
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //移除mHelper
+        // very important:
+        Log.d(TAG, "Destroying helper.");
+//        if (mHelper != null) {
+//            mHelper.dispose();
+//            mHelper = null;
+//        }
+
+    }
+
+    // updates UI to reflect model
+    //
+    public void updateUi() {
+        // update the car color to reflect premium status or lack thereof
+//        ((ImageView)findViewById(R.id.free_or_premium)).setImageResource(mIsPremium ? R.drawable.premium : R.drawable.free);
+
+//        // "Upgrade" button is only visible if the user is not premium
+//        findViewById(R.id.upgrade_button).setVisibility(mIsPremium ? View.GONE : View.VISIBLE);
+//
+//        // "Get infinite gas" button is only visible if the user is not subscribed yet
+//        findViewById(R.id.infinite_gas_button).setVisibility(mSubscribedToInfiniteGas ?
+//                View.GONE : View.VISIBLE);
+//
+//        // update gas gauge to reflect tank status
+//        if (mSubscribedToInfiniteGas) {
+//            ((ImageView)findViewById(R.id.gas_gauge)).setImageResource(R.drawable.gas_inf);
+//        }
+//        else {
+//            int index = mTank >= TANK_RES_IDS.length ? TANK_RES_IDS.length - 1 : mTank;
+//            ((ImageView)findViewById(R.id.gas_gauge)).setImageResource(TANK_RES_IDS[index]);
+//        }
+    }
+
+    // Enables or disables the "please wait" screen.
+    void setWaitScreen(boolean set) {
+        findViewById(R.id.screen_main).setVisibility(set ? View.GONE : View.VISIBLE);
+        //findViewById(R.id.screen_wait).setVisibility(set ? View.VISIBLE : View.GONE);
+    }
+
+    void complain(String message) {
+        Log.e(TAG, "**** TrivialDrive Error: " + message);
+        alert(message);
+    }
+
+    void alert(String message) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(this);
+        bld.setMessage(message);
+        bld.setNeutralButton("OK", null);
+        Log.d(TAG, "Showing alert dialog: " + message);
+        bld.create().show();
+    }
+
+    void saveData() {
+
+        /*
+         * WARNING: on a real application, we recommend you save data in a secure way to
+         * prevent tampering. For simplicity in this sample, we simply store the data using a
+         * SharedPreferences.
+         */
+
+        SharedPreferences.Editor spe = getPreferences(MODE_PRIVATE).edit();
+        spe.putInt("tank", mTank);
+        spe.commit();
+        Log.d(TAG, "Saved data: tank = " + String.valueOf(mTank));
+    }
+
+    void loadData() {
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        mTank = sp.getInt("tank", 2);
+        Log.d(TAG, "Loaded data: tank = " + String.valueOf(mTank));
+    }
+    
+    
+    
+	/**
+	 * 实现再按一次退出提醒
+	 */
+//    private static Boolean isExit = false;
+//    private static Boolean hasTask = false;
+//    Timer tExit = new Timer();
+//    TimerTask task = new TimerTask() {
+//        @Override
+//        public void run() {
+//            isExit = false;
+//            hasTask = true;
+//        }
+//    };
+//     
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        Log.d(TAG,"click quit ....... onKeyDown");
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if(isExit == false ) {
+//                isExit = true;
+//                Toast.makeText(this, "再按一次后退键退出应用程序", Toast.LENGTH_SHORT).show();
+//                if(!hasTask) {
+//                    tExit.schedule(task, 3000);
+//                }
+//            } else {
+//                finish();
+//                System.exit(0);
+//            }
+//        }
+//        return false;
+//    }
+
+    
+	private long exitTime = 0;
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				Toast.makeText(getApplicationContext(), "再按一次退出程序",
+						Toast.LENGTH_SHORT).show();
+				exitTime = System.currentTimeMillis();
+			} else {
+				finish();
+				System.exit(0);
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+}

@@ -1511,7 +1511,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f02006f;
         public static final int com_facebook_loginbutton_silver=0x7f020070;
         public static final int com_facebook_logo=0x7f020071;
-        public static final int com_facebook_picker_default_separator_color=0x7f0200ab;
+        public static final int com_facebook_picker_default_separator_color=0x7f0200ac;
         public static final int com_facebook_picker_item_background=0x7f020072;
         public static final int com_facebook_picker_list_focused=0x7f020073;
         public static final int com_facebook_picker_list_longpressed=0x7f020074;
@@ -1569,7 +1569,8 @@ containing a value of this type.
         public static final int ic_plusone_standard_off_client=0x7f0200a8;
         public static final int ic_plusone_tall_off_client=0x7f0200a9;
         public static final int logo=0x7f0200aa;
-        public static final int red=0x7f0200ac;
+        public static final int red=0x7f0200ad;
+        public static final int shape=0x7f0200ab;
     }
     public static final class id {
         public static final int action_bar=0x7f06002a;
@@ -1583,7 +1584,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060024;
         public static final int action_menu_presenter=0x7f060025;
         public static final int action_mode_close_button=0x7f060032;
-        public static final int action_settings=0x7f06007d;
+        public static final int action_settings=0x7f06007e;
         public static final int activity_chooser_view_content=0x7f060033;
         public static final int always=0x7f06001a;
         public static final int beginning=0x7f06001f;
@@ -1630,7 +1631,7 @@ containing a value of this type.
         public static final int expanded_menu=0x7f06003a;
         public static final int fb_button=0x7f060053;
         public static final int google_plus_button=0x7f060051;
-        public static final int h_list_view=0x7f060078;
+        public static final int h_list_view=0x7f060079;
         public static final int home=0x7f060022;
         public static final int homeAsUp=0x7f060014;
         public static final int hybrid=0x7f060004;
@@ -1672,8 +1673,8 @@ containing a value of this type.
         public static final int search_plate=0x7f060044;
         public static final int search_src_text=0x7f060045;
         public static final int search_voice_btn=0x7f060049;
-        public static final int send_div=0x7f060079;
-        public static final int send_sina_button=0x7f06007c;
+        public static final int send_div=0x7f06007a;
+        public static final int send_sina_button=0x7f06007d;
         public static final int shortcut=0x7f06003c;
         public static final int showCustom=0x7f060016;
         public static final int showHome=0x7f060013;
@@ -1692,11 +1693,12 @@ containing a value of this type.
         public static final int top_action_bar=0x7f06002e;
         public static final int txtEmail=0x7f060077;
         public static final int txtName=0x7f060076;
+        public static final int txtToken=0x7f060078;
         public static final int up=0x7f06002f;
         public static final int useLogo=0x7f060012;
         public static final int username_edit=0x7f06004c;
-        public static final int weibo_content_edit=0x7f06007b;
-        public static final int weibo_content_input=0x7f06007a;
+        public static final int weibo_content_edit=0x7f06007c;
+        public static final int weibo_content_input=0x7f06007b;
         public static final int withText=0x7f06001b;
     }
     public static final class integer {
@@ -2002,6 +2004,7 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0a008f;
+        public static final int ButtonBar=0x7f0a0091;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0a0066;

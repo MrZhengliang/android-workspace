@@ -3,8 +3,13 @@
  */
 package com.mobileclient.activity;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -22,9 +28,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
- 
+
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -33,6 +43,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.common.io.CharStreams;
 
 /**
  * @author zl
@@ -42,11 +53,17 @@ public class GoogleApiActivity extends Activity implements OnClickListener,
 ConnectionCallbacks, OnConnectionFailedListener{
 
 	private static final int RC_SIGN_IN = 0;
-    // Logcat tag
+
+	
+	public static final String SCOPES = "https://www.googleapis.com/auth/plus.login "
+		    + "https://www.googleapis.com/auth/drive.file";
+	
+	// Logcat tag
     private static final String TAG = "GoogleApiActivity";
  
     // Profile pic image size in pixels
     private static final int PROFILE_PIC_SIZE = 400;
+	protected static final int REQUEST_CODE_TOKEN_AUTH = 0;
  
     // Google client to interact with Google API
     private GoogleApiClient mGoogleApiClient;
@@ -64,7 +81,7 @@ ConnectionCallbacks, OnConnectionFailedListener{
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
     private ImageView imgProfilePic;
-    private TextView txtName, txtEmail;
+    private TextView txtName, txtEmail,txtToken;
     private LinearLayout llProfileLayout;
  
     @Override
@@ -78,6 +95,7 @@ ConnectionCallbacks, OnConnectionFailedListener{
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
         txtName = (TextView) findViewById(R.id.txtName);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
+        txtToken = (TextView) findViewById(R.id.txtToken);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
  
         // Button click listeners
@@ -94,6 +112,7 @@ ConnectionCallbacks, OnConnectionFailedListener{
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        
     }
  
     protected void onStop() {
@@ -147,15 +166,17 @@ ConnectionCallbacks, OnConnectionFailedListener{
             if (responseCode != RESULT_OK) {
                 mSignInClicked = false;
             }
- 
             mIntentInProgress = false;
- 
             if (!mGoogleApiClient.isConnecting()) {
                 mGoogleApiClient.connect();
             }
         }
     }
  
+    
+    /**
+     * 连接回调
+     */
     @Override
     public void onConnected(Bundle arg0) {
         mSignInClicked = false;
@@ -197,14 +218,72 @@ ConnectionCallbacks, OnConnectionFailedListener{
                 String personName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
-                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
- 
-                Log.e(TAG, "Name: " + personName + ", plusProfile: "
-                        + personGooglePlusProfile + ", email: " + email
-                        + ", Image: " + personPhotoUrl);
+                final String accountName = Plus.AccountApi.getAccountName(mGoogleApiClient);
+                
+                String googleAccessToken="";
+                
+                AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        String token = null;
+
+                        try {
+                            token = GoogleAuthUtil.getToken(
+                                    GoogleApiActivity.this,
+                                    accountName,
+                                    "oauth2:" + SCOPES);
+                            
+//                            String sAccessToken = GoogleAuthUtil.getToken(GoogleApiActivity.this, accountName,
+//                                    "oauth2:" + Scopes.PLUS_LOGIN + " https://www.googleapis.com/auth/userinfo.email");
+                            
+                            System.out.println("token:"+token);
+//                            System.out.println("sAccessToken:"+sAccessToken);
+                        } catch (IOException transientEx) {
+                            // Network or server error, try later
+                            Log.e(TAG, transientEx.toString());
+                        } catch (UserRecoverableAuthException e) {
+                            // Recover (with e.getIntent())
+                            Log.e(TAG, e.toString());
+                            Intent recover = e.getIntent();
+                            startActivityForResult(recover, REQUEST_CODE_TOKEN_AUTH);
+                        } catch (GoogleAuthException authEx) {
+                            // The call is not ever expected to succeed
+                            // assuming you have already verified that 
+                            // Google Play services is installed.
+                            Log.e(TAG, authEx.toString());
+                        }
+
+                        return token;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String token) {
+                        //Log.i(TAG, "Access token:" + token);
+                        txtToken.setText(token);
+                        // Update the UI after signin
+                        updateUI(true);
+                        
+                        //校验账户和token
+                        //checkAccountAndToken(token);
+                        new AuthSyncTask().execute(token);
+                        new AuthSyncTask().execute(token);
+                        new AuthSyncTask().execute(token);
+                        new AuthSyncTask().execute(token);
+                    }
+
+                };
+                
+                //access token
+                task.execute();
+                                
+                
+                Log.i(TAG, "Name: " + personName + ", plusProfile: "
+                        + personGooglePlusProfile + ", email: " + accountName
+                        + ", Image: " + personPhotoUrl +",token:"+googleAccessToken+",accessToken:"+googleAccessToken);
  
                 txtName.setText(personName);
-                txtEmail.setText(email);
+                txtEmail.setText(accountName);
+                
  
                 // by default the profile url gives 50x50 px image only
                 // we can replace the value with whatever dimension we want by
@@ -262,6 +341,15 @@ ConnectionCallbacks, OnConnectionFailedListener{
      * Sign-in into google
      * */
     private void signInWithGplus() {
+    	
+    	if (mGoogleApiClient.isConnected()) {
+            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+            mGoogleApiClient.disconnect();
+            mGoogleApiClient.connect();
+            
+            //updateUI(false);
+        }
+    	
         if (!mGoogleApiClient.isConnecting()) {
             mSignInClicked = true;
             resolveSignInError();
@@ -276,6 +364,7 @@ ConnectionCallbacks, OnConnectionFailedListener{
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
+            
             updateUI(false);
         }
     }
@@ -328,5 +417,101 @@ ConnectionCallbacks, OnConnectionFailedListener{
     }
 
 
+    /**
+     * 校验当前账户和token
+     * @return
+     */
+    private boolean checkAccountAndToken(String token){
+    	final String account = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
+    	
+    	
+        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+
+            @Override
+            protected String doInBackground(Void... params) {
+                HttpURLConnection urlConnection = null;
+
+                try {
+                    URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo");
+//                    String sAccessToken = GoogleAuthUtil.getToken(GoogleApiActivity.this, account,
+//                        "oauth2:" + Scopes.PLUS_LOGIN + " https://www.googleapis.com/auth/userinfo.email");
+                    System.out.println("get user info :");
+                    System.out.println("sAccessToken :"+params[0]);
+                    
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestProperty("Authorization", "Bearer " + params[0]);
+                    
+                    String content = CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
+                    
+                    if (!TextUtils.isEmpty(content)) {
+                    	System.out.println("content:"+content);
+                        return  new JSONObject(content).getString("email");
+                    }
+                } catch (Exception e) {
+                    // 处理错误
+                    // e.printStackTrace(); // 调试过程中在必要时取消备注。
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String info) {
+                // 存储或使用用户的电子邮件地址
+            }
+        };
+        
+        
+        
+        task.execute();
+        
+        return false;
+    }
+    
+    
+    public class AuthSyncTask extends AsyncTask<String, Integer, String>{
+
+		@Override
+		protected String doInBackground(String... params) {
+			HttpURLConnection urlConnection = null;
+
+            try {
+                URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo");
+//                String sAccessToken = GoogleAuthUtil.getToken(GoogleApiActivity.this, account,
+//                    "oauth2:" + Scopes.PLUS_LOGIN + " https://www.googleapis.com/auth/userinfo.email");
+                System.out.println("get user info ---------------");
+                System.out.println("sAccessToken :"+params[0]);
+                
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Authorization", "Bearer " + params[0]);
+                
+                String content = CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
+                
+                if (!TextUtils.isEmpty(content)) {
+                	System.out.println("content:"+content);
+                    return  new JSONObject(content).getString("email");
+                }
+            } catch (Exception e) {
+                // 处理错误
+                // e.printStackTrace(); // 调试过程中在必要时取消备注。
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+
+            return null;
+		}
+		
+		@Override
+        protected void onPostExecute(String info) {
+            // 存储或使用用户的电子邮件地址
+        }
+    	
+    }
 }

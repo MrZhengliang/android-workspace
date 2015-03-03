@@ -10,4 +10,6 @@
 	<string name="send_request">Send Request</string>
 	<string name="query">Query</string>
 	<string name="multiQuery">Multi-query</string>
+	
+	<string name="f">f</string>
 </resources>

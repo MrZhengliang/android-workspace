@@ -1333,7 +1333,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f02006b;
         public static final int com_facebook_loginbutton_silver=0x7f02006c;
         public static final int com_facebook_logo=0x7f02006d;
-        public static final int com_facebook_picker_default_separator_color=0x7f020087;
+        public static final int com_facebook_picker_default_separator_color=0x7f020089;
         public static final int com_facebook_picker_item_background=0x7f02006e;
         public static final int com_facebook_picker_list_focused=0x7f02006f;
         public static final int com_facebook_picker_list_longpressed=0x7f020070;
@@ -1358,7 +1358,9 @@ containing a value of this type.
         public static final int com_facebook_top_background=0x7f020083;
         public static final int com_facebook_top_button=0x7f020084;
         public static final int com_facebook_usersettingsfragment_background_gradient=0x7f020085;
-        public static final int ic_launcher=0x7f020086;
+        public static final int fb_background_login=0x7f020086;
+        public static final int ic_launcher=0x7f020087;
+        public static final int shape=0x7f020088;
     }
     public static final class id {
         public static final int action_bar=0x7f050027;
@@ -1608,6 +1610,7 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_log_in_button=0x7f08000a;
         public static final int com_facebook_usersettingsfragment_logged_in=0x7f08000b;
         public static final int com_facebook_usersettingsfragment_not_logged_in=0x7f08000c;
+        public static final int f=0x7f080032;
         public static final int hello_world=0x7f08002b;
         public static final int menu_settings=0x7f08002d;
         public static final int multiQuery=0x7f080031;
@@ -1641,6 +1644,7 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f09008f;
+        public static final int ButtonBar=0x7f090090;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f090066;

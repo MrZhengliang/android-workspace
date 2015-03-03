@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-  <system systemId="http://www.w3.org/2001/xml.xsd" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.xsd_2.8.0.v20120917-0436.jar!/cache/www.w3.org/2001/xml.xsd"/>
-  <uri name="http://www.w3.org/2001/XMLSchema" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.xsd_2.8.0.v20120917-0436.jar!/cache/www.w3.org/2001/XMLSchema.xsd"/>
+  <system systemId="http://www.w3.org/2001/xml.xsd" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.xsd_2.8.1.v20130125-0826.jar!/cache/www.w3.org/2001/xml.xsd"/>
+  <uri name="http://www.w3.org/2001/XMLSchema" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.xsd_2.8.1.v20130125-0826.jar!/cache/www.w3.org/2001/XMLSchema.xsd"/>
   <public publicId="-//WAPFORUM//DTD WML 1.1//EN" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.wst.standard.schemas_1.0.501.v201301091615.jar!/dtds/wml11.dtd"/>
   <public publicId="-//W3C//DTD XHTML 1.0 Strict//EN" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.wst.standard.schemas_1.0.501.v201301091615.jar!/dtds/xhtml1-strict.dtd" webURL="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
   <public publicId="-//W3C//DTD XHTML 1.0 Transitional//EN" uri="jar:file:/D:/eclipse-mobile-juno-SR1-win32/eclipse/plugins/org.eclipse.wst.standard.schemas_1.0.501.v201301091615.jar!/dtds/xhtml1-transitional.dtd" webURL="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>

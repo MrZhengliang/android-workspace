@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
 				}
 
 				// 服务端接口地址
-				String httpUrl = "http://172.18.70.51:8080/splatform-sh3-m/unite/app_login.do";
+				String httpUrl = "http://172.18.70.58:8080/splatform-s3h4-m/unite/app_login.do";
 				HttpPost httpRequest = new HttpPost(httpUrl);
 				// 去除用户名和密码空格
 				String usercode = userName.getText().toString().trim();// 用户名
@@ -216,7 +216,7 @@ public class MainActivity extends ActionBarActivity {
 		googlePlusButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.i("GooglePlusActivity","准备跳转GooglePlusActivity...");
+				Log.i("GoogleApiActivity","准备跳转GoogleApiActivity...");
 				Intent intent = new Intent(MainActivity.this,
 						GoogleApiActivity.class);
 				startActivity(intent);

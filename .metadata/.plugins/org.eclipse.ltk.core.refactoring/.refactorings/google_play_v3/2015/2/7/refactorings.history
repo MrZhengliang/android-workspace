@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;google_play_v3&apos;&#x0D;&#x0A;- Original project: &apos;google_play_v3&apos;&#x0D;&#x0A;- Original element: &apos;google_play_v3/src/com.snail.billing.demo&apos;" description="Delete element" element1="/src&lt;com.snail.billing.demo" element2="/src&lt;com.snail.billing" element3="/src&lt;com.snail" elements="3" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1423469542979" subPackages="false" version="1.0"/>
+</session>

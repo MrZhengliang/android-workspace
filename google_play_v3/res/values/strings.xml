@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">google play v3 test</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="to_game">>>>进入游戏>>></string>
+    <string name="to_recharge">>>>储值>>></string>
+    <string name="buy_gold1000">購買>>元寶1000</string>
+    <string name="total_golds">金币数量：</string>
+    <string name="base64EncodedPublicKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs2Ib5QbGUkJUJsDR1EMcRML/htd0TAF59K9wxVbgcjTOwG7RePewO1g33WCjqA75QjVQEnJlOQcLFhjcgguXiRYcUHXkG49mH+GyKgZTNtc9XPBVyOuwThzPlFp5d2Mkqd9Mn+pmnFRPabrmOfcgBSEFny/dwMB3e0R/+FwQwXmkxb8dKAGI9o+VIJLKadrw4u8wFvyATiI51/o9xrR8bjFtuMAP0YBGw46h1NXCfFxiBTIpEctlyWRxaN6mGdiP6/kvsU8iqesmA6oUI/guc54A5UcPXP5i5BbwlBimsmDx+rZFNV4n8E5hvP5mI18b5ulgLi7qA0MXhYMHCPqmqwIDAQAB</string>
+
+    <!--  -->
+    <string name="setup_isSuccess">初始化in-app billing失敗:</string>
+    <string name="query_inventory">查詢購買過的產品失敗:</string>
+    <string name="purchase_failure">購買未完成！</string>
+    <string name="purchase_failure_verify">購買失敗， 驗證不通過！</string>
+    
+    <string name="consume_failure">異常信息：</string>
+</resources>
